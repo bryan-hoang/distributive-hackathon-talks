@@ -1,6 +1,5 @@
 ---
-theme: seriph
-background: https://source.unsplash.com/collection/94734566/1920x1080
+theme: dracula
 class: text-center
 highlighter: shiki
 lineNumbers: false
@@ -12,27 +11,17 @@ info: |
 drawings:
   persist: false
 transition: slide-left
-title: Welcome to Slidev
+title: node|deno|bun & dcp-client
 ---
 
-# Welcome to Slidev
+# node|deno|bun & dcp-client
 
-Presentation slides for developers
-
-<div class="pt-12">
-  <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
-    Press Space for next page <carbon:arrow-right class="inline"/>
-  </span>
-</div>
+Wrestling with JS Runtime compatability
 
 <div class="abs-br m-6 flex gap-2">
   <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="text-xl slidev-icon-btn opacity-50 !border-none !hover:text-white">
     <carbon:edit />
   </button>
-  <a href="https://github.com/slidevjs/slidev" target="_blank" alt="GitHub"
-    class="text-xl slidev-icon-btn opacity-50 !border-none !hover:text-white">
-    <carbon-logo-github />
-  </a>
 </div>
 
 <!--
@@ -41,393 +30,280 @@ The last comment block of each slide will be treated as slide notes. It will be 
 
 ---
 transition: fade-out
+layout: image-right
+image: https://i.imgflip.com/7w5nbh.jpg
 ---
 
-# What is Slidev?
+## Node (2009)
 
-Slidev is a slides maker and presenter designed for developers, consist of the following features
+- The OG
+- `npm`, **pain**
+- V8
 
-- 📝 **Text-based** - focus on the content with Markdown, and then style them later
-- 🎨 **Themable** - theme can be shared and used with npm packages
-- 🧑‍💻 **Developer Friendly** - code highlighting, live coding with autocompletion
-- 🤹 **Interactive** - embedding Vue components to enhance your expressions
-- 🎥 **Recording** - built-in recording and camera view
-- 📤 **Portable** - export into PDF, PNGs, or even a hostable SPA
-- 🛠 **Hackable** - anything possible on a webpage
+## Deno (2018)
 
-<br>
-<br>
+- An anagram of Node
+- Better security, different handling of pkgs
+- V8
+- *Rust*
 
-Read more about [Why Slidev?](https://sli.dev/guide/why)
+## Bun (2021)
 
-<!--
-You can have `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/guide/syntax#embedded-styles
--->
-
-<style>
-h1 {
-  background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-}
-</style>
-
-<!--
-Here is another comment.
--->
-
----
-layout: default
----
-
-# Table of contents
-
-```
-<Toc minDepth="1" maxDepth="5"></Toc>
-```
-
-<Toc></Toc>
+- The newest kid on the block
+- Focused on perf, wants to replace Node
+- JavaScriptCore
+- *Zig*
 
 ---
 transition: slide-up
-
-level: 2
 ---
 
-# Navigation
+# Node & dcp-client
 
-Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/navigation.html)
+Initializing a project w/ `dcp-client`:
 
-### Keyboard Shortcuts
-
-|     |     |
-| --- | --- |
-| <kbd>right</kbd> / <kbd>space</kbd>| next animation or slide |
-| <kbd>left</kbd>  / <kbd>shift</kbd><kbd>space</kbd> | previous animation or slide |
-| <kbd>up</kbd> | previous slide |
-| <kbd>down</kbd> | next slide |
-
-<!-- https://sli.dev/guide/animations.html#click-animations -->
-<img
-  v-click
-  class="absolute -bottom-9 -left-7 w-80 opacity-50"
-  src="https://sli.dev/assets/arrow-bottom-left.svg"
-/>
-<p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
-
----
-layout: image-right
-image: https://source.unsplash.com/collection/94734566/1920x1080
----
-
-# Code
-
-Use code snippets and get the highlighting directly![^1]
-
-```ts {all|2|1-6|9|all}
-interface User {
-  id: number
-  firstName: string
-  lastName: string
-  role: string
-}
-
-function updateUser(id: number, update: User) {
-  const user = getUser(id)
-  const newUser = { ...user, ...update }
-  saveUser(id, newUser)
-}
+```console
+$ npm init --yes
+$ npm add dcp-client
+$ touch index.js
+$ ls
+index.js  node_modules  package-lock.json  package.json
 ```
 
-<arrow v-click="3" x1="400" y1="420" x2="230" y2="330" color="#564" width="3" arrowSize="1" />
+Importing `dcp-client`:
 
-[^1]: [Learn More](https://sli.dev/guide/syntax.html#line-highlighting)
+```js
+const dcpClient = require('dcp-client');
 
-<style>
-.footnotes-sep {
-  @apply mt-20 opacity-10;
-}
-.footnotes {
-  @apply text-sm opacity-75;
-}
-.footnote-backref {
-  display: none;
-}
-</style>
-
----
-
-# Components
-
-<div grid="~ cols-2 gap-4">
-<div>
-
-You can use Vue components directly inside your slides.
-
-We have provided a few built-in components like `<Tweet/>` and `<Youtube/>` that you can use directly. And adding your custom components is also super easy.
-
-```html
-<Counter :count="10" />
+dcpClient.init().then((dcp) => {
+  // ...
+});
 ```
 
-<!-- ./components/Counter.vue -->
-<Counter :count="10" m="t-4" />
+Running the app:
 
-Check out [the guides](https://sli.dev/builtin/components.html) for more.
-
-</div>
-<div>
-
-```html
-<Tweet id="1390115482657726468" />
+```console
+node index.js
 ```
 
-<Tweet id="1390115482657726468" scale="0.65" />
-
-</div>
-</div>
-
-<!--
-Presenter note with **bold**, *italic*, and ~~striked~~ text.
-
-Also, HTML elements are valid:
-<div class="flex w-full">
-  <span style="flex-grow: 1;">Left content</span>
-  <span>Right content</span>
-</div>
--->
-
-
----
-class: px-20
 ---
 
-# Themes
+# Node & dcp-client
 
-Slidev comes with powerful theming support. Themes can provide styles, layouts, components, or even configurations for tools. Switching between themes by just **one edit** in your frontmatter:
+**Issues?**
 
-<div grid="~ cols-2 gap-2" m="-t-2">
+None!
 
-```yaml
 ---
-theme: default
----
+
+# Deno & dcp-client
+
+Initializing a project:
+
+```console
+$ deno init
+$ ls
+deno.jsonc  main.ts  main_bench.ts  main_test.ts
 ```
 
-```yaml
----
-theme: seriph
----
+Importing `dcp-client`:
+
+```js
+import dcpClient from 'npm:dcp-client';
+
+const dcp = await dcpClient.init();
+
+// ...
 ```
 
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-default/01.png?raw=true">
+Running the app:
 
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-seriph/01.png?raw=true">
-
-</div>
-
-Read more about [How to use a theme](https://sli.dev/themes/use.html) and
-check out the [Awesome Themes Gallery](https://sli.dev/themes/gallery.html).
-
----
-preload: false
----
-
-# Animations
-
-Animations are powered by [@vueuse/motion](https://motion.vueuse.org/).
-
-```html
-<div
-  v-motion
-  :initial="{ x: -80 }"
-  :enter="{ x: 0 }">
-  Slidev
-</div>
+```console
+# Likely missing other necessary allow options.
+deno run [--watch] --allow-env --allow-read main.ts
 ```
-
-<div class="w-60 relative mt-6">
-  <div class="relative w-40 h-40">
-    <img
-      v-motion
-      :initial="{ x: 800, y: -100, scale: 1.5, rotate: -50 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-square.png"
-    />
-    <img
-      v-motion
-      :initial="{ y: 500, x: -100, scale: 2 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-circle.png"
-    />
-    <img
-      v-motion
-      :initial="{ x: 600, y: 400, scale: 2, rotate: 100 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-triangle.png"
-    />
-  </div>
-
-  <div
-    class="text-5xl absolute top-14 left-40 text-[#2B90B6] -z-1"
-    v-motion
-    :initial="{ x: -80, opacity: 0}"
-    :enter="{ x: 0, opacity: 1, transition: { delay: 2000, duration: 1000 } }">
-    Slidev
-  </div>
-</div>
-
-<!-- vue script setup scripts can be directly used in markdown, and will only affects current page -->
-<script setup lang="ts">
-const final = {
-  x: 0,
-  y: 0,
-  rotate: 0,
-  scale: 1,
-  transition: {
-    type: 'spring',
-    damping: 10,
-    stiffness: 20,
-    mass: 2
-  }
-}
-</script>
-
-<div
-  v-motion
-  :initial="{ x:35, y: 40, opacity: 0}"
-  :enter="{ y: 0, opacity: 1, transition: { delay: 3500 } }">
-
-[Learn More](https://sli.dev/guide/animations.html#motion)
-
-</div>
 
 ---
 
-# LaTeX
+# Deno & dcp-client
 
-LaTeX is supported out-of-box powered by [KaTeX](https://katex.org/).
+**Issues?**
 
-<br>
-
-Inline $\sqrt{3x-1}+(1+x)^2$
-
-Block
-$$
-\begin{array}{c}
-
-\nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &
-= \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\
-
-\nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\
-
-\nabla \cdot \vec{\mathbf{B}} & = 0
-
-\end{array}
-$$
-
-<br>
-
-[Learn more](https://sli.dev/guide/syntax#latex)
+- Slightly different implementation of `node:module` API. i.e., missing
+`require('node:module').Module`.
+  - The fix: use `require('node:modules')` as a constructor instead of
+  `require('node:module').Module`
 
 ---
 
-# Diagrams
+# Deno & dcp-client
 
-You can create diagrams / graphs from textual descriptions, directly in your Markdown.
+**Issues?**
 
-<div class="grid grid-cols-4 gap-5 pt-4 -mb-6">
+- No implementation of `node:vm` module. e.g.,
+`require('node:vm').createContext()`.
 
-```mermaid {scale: 0.5}
-sequenceDiagram
-    Alice->John: Hello John, how are you?
-    Note over Alice,John: A typical interaction
+   ```console
+   $ deno run --allow-env --allow-read main.ts
+   error: Uncaught Error: Not implemented: createContext
+   ...
+   ```
+
+   where
+
+   > The node:vm module enables compiling and running code within V8 Virtual
+   > Machine contexts. A common use case is to run the code in a different V8
+   > Context. This means invoked code has a different global object than the
+   > invoking code.
+
+  - Can potentially come after the `ShadowRealm` proposal (Stage 3) [^1]. i.e.,
+
+  > ShadowRealms are a distinct global environment, with its own global object
+  > containing its own intrinsics and built-ins (standard objects that are not
+  > bound to global variables, like the initial value of Object.prototype).
+
+[^1]: https://github.com/denoland/deno/issues/18315#issuecomment-1477316394
+
+---
+
+# Bun & dcp-client
+
+Initializing a project:
+
+```console
+$ bun init
+$ bun add dcp-client
+$ ls
+bun.lockb  index.ts  node_modules  package.json  README.md  tsconfig.json
 ```
 
-```mermaid {theme: 'neutral', scale: 0.8}
-graph TD
-B[Text] --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
+Importing `dcp-client`:
+
+```js
+const dcpClient = require('dcp-client');
+
+const dcp = await dcpClient.init();
+
+// ...
 ```
 
-```mermaid
-mindmap
-  root((mindmap))
-    Origins
-      Long history
-      ::icon(fa fa-book)
-      Popularisation
-        British popular psychology author Tony Buzan
-    Research
-      On effectivness<br/>and features
-      On Automatic creation
-        Uses
-            Creative techniques
-            Strategic planning
-            Argument mapping
-    Tools
-      Pen and paper
-      Mermaid
+Running the app:
+
+```console
+bun run [--watch] index.ts
 ```
 
-```plantuml {scale: 0.7}
-@startuml
+---
 
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
+# Bun & dcp-client
+
+**Issues?**
+
+- Slightly different implementation of `node:module` API. i.e., missing
+`require('node:module').Module`.
+  - The fix: use `require('node:modules')` as a constructor instead of
+  `require('node:module').Module`
+- Different expected/known error messages for platform detection. e.g., "Module
+  not found" errors, "Illegel return statement".
+  - The fix: add checks for Bun specific error messages.
+
+---
+
+# Bun & dcp-client
+
+**Issues?**
+
+- Bug in `require.cache` implementation. e.g.,
+
+  ```console
+    console.log(require('dcp/dcp-url'));
+    try
+    {
+      console.log(require('dcp/dcp-url'));
+          ^
+  error: Cannot require module "dcp/dcp-url"
+  ```
+
+---
+layout: two-cols
+---
+
+Minimal repro:
+
+```js
+require.cache.foo = {
+	exports: {
+		bar: 'foobar',
+	},
+};
+
+console.log(require('foo'));
+
+try {
+	console.log(require('foo'));
+} catch (error) {
+	console.error(error);
 }
 
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
-}
-
-cloud {
-  [Example 1]
-}
-
-
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
-}
-
-
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
-
-@enduml
+console.log(require('foo'));
 ```
 
-</div>
+::right::
 
-[Learn More](https://sli.dev/guide/syntax.html#diagrams)
+Outputs:
+
+```console
+$ bun run --watch test.js
+{
+  bar: "foobar"
+}
+ 5 | };
+ 6 |
+ 7 | console.log(require('foo'));
+ 8 |
+ 9 | try {
+10 |    console.log(require('foo'));
+            ^
+error: Cannot require module "foo"
+      at /home/bryan/src/github.com/bryan-hoang/dcp-bun-app/test.js:10:9
+      at /home/bryan/src/github.com/bryan-hoang/dcp-bun-app/test.js:10:9
+      at globalThis (/home/bryan/src/github.com/bryan-hoang/dcp-bun-app/test.js:15:26)
+
+{
+  bar: "foobar"
+}
+
+```
 
 ---
-src: ./pages/multiple-entries.md
-hide: false
----
+
+# What has been done so far & Learnings
+
+- I filed MRs in the `dcp` & `dcp-client` to try and improve on the issues I
+  encountered so far.
+
+- Deno & Bun developer experience is a breath of fresh air (compared to Node & NPM at least).
+
+- https://github.com/bryan-hoang/dcp-deno-app
+
+- https://github.com/bryan-hoang/dcp-bun-app
 
 ---
-layout: center
-class: text-center
+
+# Next steps
+
+- Deno
+  - Wait for `node:vm` to be implemented. Or, try out `ShadowRealm` API once
+  it's available.
+
+- Bun
+  - File a bug report with the minimal repro for the module not found error code
+  & `require.cache` implementation.
+
 ---
 
-# Learn More
+# The end, for now.
 
-[Documentations](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/showcases.html)
+Thank you for listening!
+
+Questions?
